@@ -5,7 +5,9 @@
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="{{ url()->current() }}" />
 
-<!-- Replace this with your favicons --->
+<!-- Favicons -->
+<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+<link rel="apple-touch-icon" href="{{ asset('favicon.png') }}" />
 <x-shopper::favicons />
 
 <link rel="preconnect" href="https://fonts.bunny.net">

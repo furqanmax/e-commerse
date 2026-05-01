@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 // Storefront
-Route::get('/', Home::class)->name('home');
+Route::get('/', ProductIndex::class)->name('home');
 Route::get('shop', ProductIndex::class)->name('shop.index');
 Route::get('shop/{product:slug}', ProductShow::class)->name('shop.product');
 Route::get('categories', CategoryIndex::class)->name('shop.categories');

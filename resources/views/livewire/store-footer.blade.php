@@ -5,7 +5,7 @@
             <div>
                 <div class="max-w-sm">
                     <x-link :href="route('home')">
-                        <img src="{{ asset('logo.jpeg') }}" alt="Petkhazana" class="h-12 w-auto" />
+                        <img src="{{ asset('logo.png') }}" alt="Petkhazana" class="h-12 w-auto" />
                     </x-link>
                     <p class="mt-8 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
                         {{ __('Your one-stop shop for all pet supplies. Quality products for your beloved pets.') }}

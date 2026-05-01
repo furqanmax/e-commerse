@@ -7,7 +7,7 @@
     <div class="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
         <div class="flex w-full max-w-sm flex-col gap-2">
             <x-link :href="route('home')" class="flex flex-col items-center gap-2 font-medium">
-                <img src="{{ asset('logo.jpeg') }}" alt="Petkhazana" class="h-16 w-auto mb-2" />
+                <img src="{{ asset('logo.png') }}" alt="Petkhazana" class="h-16 w-auto mb-2" />
                 <!-- <span class="text-xl font-bold text-zinc-900 dark:text-white">Petkhazana</span> -->
             </x-link>
             <div class="flex flex-col gap-6">
