@@ -13,32 +13,75 @@
         </div> -->
 
         <!-- Categories Section -->
-         
         <div class="mb-8">
-            <!-- <flux:heading size="lg" class="mb-4">{{ __('Categories') }}</flux:heading> -->
-            <div class="flex flex-wrap gap-2 sm:gap-3">
+            <!-- Section Header -->
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">{{ __('Categories') }}</h2>
+                <a
+                    href="{{ route('shop.categories') }}"
+                    wire:navigate
+                    class="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
+                >
+                    {{ __('See All') }}
+                </a>
+            </div>
+
+            <!-- Categories Horizontal Scroll -->
+            <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide" style="-webkit-overflow-scrolling: touch;">
+                <!-- All Category -->
                 <button
                     type="button"
                     wire:click="$set('category', null)"
-                    @class([
-                        'px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
-                        'bg-blue-600 text-white dark:bg-blue-500' => !$category,
-                        'bg-zinc-200 text-zinc-700 hover:bg-zinc-300 dark:bg-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-600' => $category,
-                    ])
+                    class="flex flex-col items-center flex-shrink-0 group"
                 >
-                    {{ __('All') }}
+                    <div @class([
+                        'relative size-16 lg:size-20 rounded-full overflow-hidden transition-all duration-300 flex items-center justify-center',
+                        'bg-emerald-100 ring-2 ring-emerald-500 ring-offset-2' => !$category,
+                        'bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700' => $category,
+                    ])>
+                        <flux:icon.squares-2x2 class="size-8 text-zinc-500 dark:text-zinc-400" />
+                    </div>
+                    <span @class([
+                        'mt-2 text-xs font-medium text-center',
+                        'text-emerald-600 dark:text-emerald-400' => !$category,
+                        'text-zinc-600 dark:text-zinc-400' => $category,
+                    ])>
+                        {{ __('All') }}
+                    </span>
                 </button>
+
+                <!-- Category Items -->
                 @foreach($this->categories as $cat)
+                    @php
+                        $thumbnailCollection = config('shopper.media.storage.thumbnail_collection');
+                        $image = $cat->getFirstMediaUrl($thumbnailCollection);
+                        $fallback = shopper_fallback_url();
+                        $isActive = $category === $cat->id;
+                    @endphp
                     <button
                         type="button"
                         wire:click="$set('category', {{ $cat->id }})"
-                        @class([
-                            'px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
-                            'bg-blue-600 text-white dark:bg-blue-500' => $category === $cat->id,
-                            'bg-zinc-200 text-zinc-700 hover:bg-zinc-300 dark:bg-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-600' => $category !== $cat->id,
-                        ])
+                        class="flex flex-col items-center flex-shrink-0 group"
                     >
-                        {{ $cat->name }}
+                        <div @class([
+                            'relative size-16 lg:size-20 rounded-full overflow-hidden transition-all duration-300',
+                            'ring-2 ring-emerald-500 ring-offset-2' => $isActive,
+                            'group-hover:ring-2 group-hover:ring-zinc-300 dark:group-hover:ring-zinc-600' => !$isActive,
+                        ])>
+                            <img
+                                src="{{ $image ?: $fallback }}"
+                                alt="{{ $cat->name }}"
+                                class="size-full object-cover object-center"
+                                loading="lazy"
+                            />
+                        </div>
+                        <span @class([
+                            'mt-2 text-xs font-medium text-center transition-colors',
+                            'text-emerald-600 dark:text-emerald-400' => $isActive,
+                            'text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-200' => !$isActive,
+                        ])>
+                            {{ $cat->name }}
+                        </span>
                     </button>
                 @endforeach
             </div>
@@ -46,27 +89,76 @@
 
         <!-- Search and Filters Section -->
         <div class="mb-8">
-            <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex items-center gap-3">
                 <!-- Search Bar -->
                 <div class="flex-1">
-                    <flux:input 
-                        type="search" 
-                        wire:model.live.debounce.300ms="search" 
-                        placeholder="{{ __('Search products...') }}" 
-                        icon="magnifying-glass" 
+                    <flux:input
+                        type="search"
+                        wire:model.live.debounce.300ms="search"
+                        placeholder="{{ __('Search products...') }}"
+                        icon="magnifying-glass"
                         class="w-full"
                     />
                 </div>
-                
-                <!-- Sort Dropdown (Mobile) -->
-                <div class="sm:hidden">
-                    <flux:select wire:model.live="sort" class="w-full">
+
+                <!-- Filter Button -->
+                <flux:modal.trigger name="filter-modal">
+                    <flux:button variant="subtle" icon="funnel" class="shrink-0" />
+                </flux:modal.trigger>
+            </div>
+        </div>
+
+        <!-- Filter Modal -->
+        <flux:modal name="filter-modal" class="md:w-96">
+            <div class="space-y-6">
+                <div>
+                    <flux:heading size="lg">{{ __('Filters') }}</flux:heading>
+                    <flux:text class="mt-1">{{ __('Refine your search') }}</flux:text>
+                </div>
+
+                <!-- Sort -->
+                <div>
+                    <flux:label>{{ __('Sort by') }}</flux:label>
+                    <flux:select wire:model.live="sort" class="mt-2 w-full">
                         <flux:select.option value="latest">{{ __('Newest') }}</flux:select.option>
                         <flux:select.option value="name">{{ __('Name') }}</flux:select.option>
                     </flux:select>
                 </div>
+
+                <!-- Active Category Display -->
+                @if($category)
+                    <div>
+                        <flux:label>{{ __('Category') }}</flux:label>
+                        <div class="mt-2 flex items-center gap-2">
+                            <flux:badge variant="primary">
+                                {{ $this->categories->firstWhere('id', $category)?->name }}
+                            </flux:badge>
+                            <button
+                                type="button"
+                                wire:click="$set('category', null)"
+                                class="text-sm text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+                            >
+                                {{ __('Clear') }}
+                            </button>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Clear All -->
+                @if($category || $search)
+                    <flux:separator />
+                    <div class="flex gap-3">
+                        <flux:button
+                            variant="primary"
+                            wire:click="$set('search', ''); $set('category', null);"
+                            class="w-full"
+                        >
+                            {{ __('Clear All Filters') }}
+                        </flux:button>
+                    </div>
+                @endif
             </div>
-        </div>
+        </flux:modal>
 
         <!-- Products Grid -->
         <div>

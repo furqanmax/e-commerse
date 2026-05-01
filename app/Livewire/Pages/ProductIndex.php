@@ -48,6 +48,7 @@ class ProductIndex extends Component
                 ->scopes('enabled')
                 ->whereNull('parent_id')
                 ->orderBy('position')
+                ->with('media')
                 ->get(['id', 'name', 'slug'])
         );
     }

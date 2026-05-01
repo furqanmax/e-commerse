@@ -56,18 +56,18 @@
         <!-- Price -->
         @if (! $product->isVariant() && $product->prices->isNotEmpty())
             <div class="mt-2 flex items-center gap-2">
-                @if ($price->sale_price)
-                    <span class="text-base font-semibold text-zinc-900 dark:text-white">
-                        {{ $price->sale_price }}
-                    </span>
-                    <span class="text-sm text-zinc-500 line-through">
-                        {{ $price->price }}
-                    </span>
-                @else
-                    <span class="text-base font-semibold text-zinc-900 dark:text-white">
-                        {{ $price->price }}
-                    </span>
-                @endif
+                @if ($price->compare)
+    <span class="text-base font-semibold text-zinc-900 dark:text-white">
+        {{ $price->amount->formatted }}
+    </span>
+    <span class="text-sm text-zinc-500 line-through">
+        {{ $price->compare->formatted }}
+    </span>
+@else
+    <span class="text-base font-semibold text-zinc-900 dark:text-white">
+        {{ $price->amount->formatted }}
+    </span>
+@endif
             </div>
         @endif
     </div>

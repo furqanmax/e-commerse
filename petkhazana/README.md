@@ -1,11 +1,11 @@
-# petKhazana
+# petkhazana
 
 A Shopper starter kit.
 
 ## Installation
 
 ```bash
-php artisan shopper:kit:install sf/petkhazana
+php artisan shopper:kit:install max/petkhazana
 ```
 
 ## Development

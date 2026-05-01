@@ -1,10 +1,10 @@
 {
-    "name": "sf/petkhazana",
-    "description": "none",
+    "name": "max/petkhazana",
+    "description": "",
     "license": "MIT",
     "authors": [
         {
-            "name": "sf"
+            "name": "max"
         }
     ]
 }
