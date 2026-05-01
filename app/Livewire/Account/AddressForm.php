@@ -59,17 +59,25 @@ class AddressForm extends Component
             ? Address::query()->findOrFail($addressId)
             : new Address;
 
-        $this->countries = Country::query()
-            ->whereIn(
-                column: 'id',
-                values: resolve(GetCountriesByZone::class)
-                    ->handle()
-                    ->where('zoneId', ZoneSessionManager::getSession()?->zoneId)
-                    ->pluck('countryId')
-            )
-            ->pluck('name', 'id');
+        // Initialize countries as an empty collection
+        $this->countries = collect();
 
-        $this->country_id = ZoneSessionManager::getSession()?->countryId;
+        $zoneSession = ZoneSessionManager::getSession();
+        
+        if ($zoneSession?->zoneId) {
+            $countryIds = resolve(GetCountriesByZone::class)
+                ->handle()
+                ->where('zoneId', $zoneSession->zoneId)
+                ->pluck('countryId');
+                
+            if ($countryIds->isNotEmpty()) {
+                $this->countries = Country::query()
+                    ->whereIn('id', $countryIds)
+                    ->pluck('name', 'id');
+            }
+        }
+
+        $this->country_id = $zoneSession?->countryId;
 
         if ($addressId && $this->address->id) {
             $this->fill(array_merge($this->address->toArray(), ['type' => $this->address->type]));
@@ -101,8 +109,14 @@ class AddressForm extends Component
         $this->dispatch('addresses-updated');
     }
 
+    // Add this in the render() method before the return:
     public function render(): View
     {
+        // Ensure countries is always a collection
+        if (!isset($this->countries)) {
+            $this->countries = collect();
+        }
+        
         return view('livewire.account.address-form', [
             'title' => $this->address?->id
                 ? __('Update address')

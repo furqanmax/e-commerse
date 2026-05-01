@@ -62,7 +62,7 @@
                     <flux:field>
                         <flux:label>{{ __('Country') }}</flux:label>
                         <flux:select wire:model="country_id" placeholder="{{ __('Select a country') }}">
-                            @foreach ($countries as $key => $country)
+                            @foreach ($countries ?? [] as $key => $country)
                                 <flux:select.option value="{{ $key }}">{{ $country }}</flux:select.option>
                             @endforeach
                         </flux:select>
