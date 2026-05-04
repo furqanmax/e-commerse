@@ -36,7 +36,7 @@
                 >
                     <div @class([
                         'relative size-16 lg:size-20 rounded-full overflow-hidden transition-all duration-300 flex items-center justify-center',
-                        'bg-emerald-100 ring-2 ring-emerald-500 ring-offset-2' => !$category,
+                        'bg-emerald-100  ring-emerald-500 ' => !$category,
                         'bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700' => $category,
                     ])>
                         <flux:icon.squares-2x2 class="size-8 text-zinc-500 dark:text-zinc-400" />
