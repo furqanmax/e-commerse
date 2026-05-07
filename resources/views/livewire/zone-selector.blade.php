@@ -18,8 +18,8 @@
     @endif
 
     <!-- Updated modal with mobile-responsive classes -->
-    <flux:modal wire:model="showModal" class="w-[90vw] max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl p-0! mx-auto">
-        <x-card class="space-y-4">
+    <flux:modal wire:model="showModal" class="md:w-[28rem]">
+        <div class="space-y-4">
             <flux:heading size="lg">{{ __('Select your country') }}</flux:heading>
 
             @if (\App\Actions\ZoneSessionManager::checkSession())
@@ -36,7 +36,7 @@
             </flux:text>
 
             <!-- Updated scrollable area for mobile -->
-            <div class="mt-4 divide-y divide-zinc-200 dark:divide-zinc-700 max-h-60 sm:max-h-72 md:max-h-80 lg:max-h-96 overflow-y-auto">
+            <div class="mt-4 divide-y divide-zinc-200 dark:divide-zinc-700 max-h-60 sm:max-h-72 md:max-h-80 overflow-y-auto">
                 @foreach ($this->countries->groupBy('zoneName') as $zone => $countries)
                     <div class="py-4">
                         <h4 class="text-sm font-medium text-zinc-900 dark:text-white">{{ $zone }}</h4>
@@ -47,7 +47,7 @@
                                         wire:click="selectZone({{ $country->countryId }})"
                                         type="button"
                                         @class([
-                                            'flex items-center w-full px-3 py-3 rounded-lg text-sm transition', // Increased py for mobile
+                                            'flex items-center w-full px-3 py-3 rounded-lg text-sm transition',
                                             'bg-zinc-100 dark:bg-zinc-800 font-medium text-zinc-900 dark:text-white' => \App\Actions\ZoneSessionManager::getSession()?->countryId === $country->countryId,
                                             'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50' => \App\Actions\ZoneSessionManager::getSession()?->countryId !== $country->countryId,
                                         ])
@@ -61,6 +61,6 @@
                     </div>
                 @endforeach
             </div>
-        </x-card>
+        </div>
     </flux:modal>
 </div>
