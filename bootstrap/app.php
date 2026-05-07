@@ -17,12 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'webhooks/*',
         ]);
-        $middleware->alias([
-            'page-cache' => \Silber\PageCache\Middleware\CacheResponse::class,
-        ]);
-        $middleware->appendToGroup('web', [
-            \Silber\PageCache\Middleware\CacheResponse::class,
-        ]);
+       
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
