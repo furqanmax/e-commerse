@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 // Storefront
-Route::middleware('page-cache')->get('/', ProductIndex::class)->name('home');
-Route::middleware('page-cache')->get('shop', ProductIndex::class)->name('shop.index');
+Route::get('/', ProductIndex::class)->name('home');
+Route::get('shop', ProductIndex::class)->name('shop.index');
 Route::get('shop/{product:slug}', ProductShow::class)->name('shop.product');
-Route::middleware('page-cache')->get('categories', CategoryIndex::class)->name('shop.categories');
+Route::get('categories', CategoryIndex::class)->name('shop.categories');
 Route::get('categories/{category:slug}', CategoryShow::class)->name('shop.category');
 Route::get('collections/{collection:slug}', CollectionShow::class)->name('shop.collection');
 Route::get('search', SearchProducts::class)->name('shop.search');
