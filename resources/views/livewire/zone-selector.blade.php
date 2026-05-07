@@ -18,7 +18,7 @@
     @endif
 
     <!-- Updated modal with mobile-responsive classes -->
-    <flux:modal wire:model="showModal" class="w-[95vw] max-w-md md:w-lg p-0! mx-auto">
+    <flux:modal wire:model="showModal" class="w-[90vw] max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl p-0! mx-auto">
         <x-card class="space-y-4">
             <flux:heading size="lg">{{ __('Select your country') }}</flux:heading>
 
@@ -36,7 +36,7 @@
             </flux:text>
 
             <!-- Updated scrollable area for mobile -->
-            <div class="mt-4 divide-y divide-zinc-200 dark:divide-zinc-700 max-h-80 overflow-y-auto md:max-h-96">
+            <div class="mt-4 divide-y divide-zinc-200 dark:divide-zinc-700 max-h-60 sm:max-h-72 md:max-h-80 lg:max-h-96 overflow-y-auto">
                 @foreach ($this->countries->groupBy('zoneName') as $zone => $countries)
                     <div class="py-4">
                         <h4 class="text-sm font-medium text-zinc-900 dark:text-white">{{ $zone }}</h4>
