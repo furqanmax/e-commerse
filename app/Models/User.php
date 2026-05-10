@@ -23,6 +23,16 @@ final class User extends Authenticatable implements ShopperUser
 
     protected $guarded = [];
 
+    protected $fillable = [
+    'first_name',
+    'last_name',
+    'email',
+    'password',
+    'google_id',
+    'google_token',
+    'google_token_expires_at',
+];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -42,7 +52,7 @@ final class User extends Authenticatable implements ShopperUser
      */
     public function initials(): string
     {
-        return Str::of($this->full_name)
+        return Str::of($this->first_name . ' ' . $this->last_name)
             ->explode(' ')
             ->take(2)
             ->map(fn ($word): string => Str::substr($word, 0, 1))

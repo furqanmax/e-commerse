@@ -13,6 +13,7 @@
         "laravel/fortify": "^1.25",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.27",
         "laravel/tinker": "^2.10.1",
         "livewire/flux": "^2.0",
         "livewire/livewire": "^3.7",

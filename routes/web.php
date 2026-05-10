@@ -14,6 +14,8 @@ use App\Livewire\Pages\SearchProducts;
 use App\Livewire\Pages\StripePayment;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\LegalController;
+use App\Http\Controllers\GoogleController;
 
 // Storefront
 Route::get('/', ProductIndex::class)->name('home');
@@ -47,5 +49,18 @@ Route::middleware(['auth', 'verified'])->prefix('account')->group(function (): v
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+/*
+* Legal routes
+*/
+Route::get('/privacy', [LegalController::class, 'privacy'])->name('legal.privacy');
+Route::get('/terms-of-use', [LegalController::class, 'terms'])->name('legal.terms');
+Route::get('/refund-policy', [LegalController::class, 'refund'])->name('legal.refund');
+Route::get('/shipping', [LegalController::class, 'shipping'])->name('legal.shipping');
+
+
+// Google OAuth routes
+Route::get('/auth/google', [App\Http\Controllers\Auth\GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
 require __DIR__.'/settings.php';

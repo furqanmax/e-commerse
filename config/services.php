@@ -42,4 +42,10 @@ return [
         'capture_method' => env('STRIPE_CAPTURE_METHOD', 'automatic'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
+    ],
+
 ];
