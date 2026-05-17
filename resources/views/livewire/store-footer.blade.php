@@ -16,7 +16,7 @@
                     <livewire:zone-selector />
                 </div>
             </div>
-            <div class="mt-16 gap-8 space-y-6 lg:col-span-1 lg:mt-0 sm:grid sm:grid-cols-3 sm:space-y-0">
+            <div class="mt-16 gap-8 space-y-6 lg:col-span-1 lg:mt-0 sm:grid sm:grid-cols-4 sm:space-y-0">
                 <div>
                     <h3 class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white">{{ __('Shop') }}</h3>
                     <ul role="list" class="mt-6 space-y-4">
@@ -76,6 +76,21 @@
                                 </x-link>
                             </li>
                         @endauth
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold leading-6 text-zinc-900 dark:text-white">{{ __('Legal') }}</h3>
+                    <ul role="list" class="mt-6 space-y-4">
+                        <li>
+                            <x-link :href="route('privacy-policy')" class="text-sm leading-6 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+                                {{ __('Privacy Policy') }}
+                            </x-link>
+                        </li>
+                        <li>
+                            <x-link :href="route('delete-account')" class="text-sm leading-6 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">
+                                {{ __('Delete Account') }}
+                            </x-link>
+                        </li>
                     </ul>
                 </div>
             </div>

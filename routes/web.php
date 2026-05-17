@@ -63,4 +63,10 @@ Route::get('/shipping', [LegalController::class, 'shipping'])->name('legal.shipp
 Route::get('/auth/google', [App\Http\Controllers\Auth\GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
+/*
+* Public Pages
+*/
+Route::get('/privacy-policy', [\App\Http\Controllers\PageController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('/delete-account', [\App\Http\Controllers\PageController::class, 'deleteAccount'])->name('delete-account');
+
 require __DIR__.'/settings.php';
